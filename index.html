@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Мета-теги для правильного отображения страницы -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Иконка страницы (пока пустая ссылка) -->
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    
+    <!-- Заголовок страницы в браузере -->
+    <title>Помогалка По Урокам</title>
+    
+    <!-- Стили для оформления страницы -->
+    <style>
+        /* Основные стили для body */
+        body {
+            text-align: center;           /* Выравнивание текста по центру */
+            color: white;                 /* Цвет текста белый */
+            font-family: Arial, sans-serif; /* Шрифт Arial */
+            margin: 0;                    /* Убираем внешние отступы */
+            padding: 20px;                /* Добавляем внутренние отступы */
+        }
+
+        /* Фон страницы - темно-зеленый цвет */
+        html {
+            background-color: rgb(47, 61, 61);
+        }
+
+        /* Стили для блока с логотипом */
+        .logo {
+            margin-bottom: 20px;          /* Отступ снизу */
+        }
+
+        /* Стили для основного текста */
+        .main {
+            margin: 20px 0;               /* Вертикальные отступы */
+            font-size: 1.2em;             /* Размер шрифта */
+        }
+
+        /* Стили для блока с кнопками */
+        .buttons {
+            margin: 30px 0;               /* Вертикальные отступы */
+            display: flex;                /* Flex-контейнер для выравнивания */
+            justify-content: center;      /* Центрируем элементы */
+            gap: 15px;                    /* Расстояние между кнопками */
+        }
+
+        /* Общие стили для всех кнопок */
+        button {
+            text-align: center;           /* Текст по центру */
+            width: 250px;                 /* Ширина кнопки */
+            height: 50px;                 /* Высота кнопки */
+            background-color: aqua;       /* Цвет фона - аква */
+            border: none;                 /* Убираем границу */
+            border-radius: 8px;           /* Скругленные углы */
+            font-size: 16px;              /* Размер шрифта */
+            cursor: pointer;              /* Курсор указатель при наведении */
+            font-weight: bold;            /* Жирный шрифт */
+        }
+
+        /* Стили при наведении на кнопки */
+        button:hover {
+            background-color: lightblue;  /* Светло-голубой при наведении */
+        }
+
+        /* Стили для блока отображения сообщений */
+        #message {
+            margin-top: 30px;             /* Отступ сверху */
+            font-size: 2em;               /* Большой размер шрифта */
+            font-weight: bold;            /* Жирный шрифт */
+            min-height: 40px;             /* Минимальная высота */
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка страницы -->
+    <header>
+        <!-- Блок с логотипом и заголовком -->
+        <div class="logo">
+            <img src="logo.png" alt="Логотип"> <!-- Изображение логотипа -->
+            <h1>Помогалка По Урокам</h1>   <!-- Основной заголовок страницы -->
+        </div>
+        
+        <!-- Блок с информацией о сайте -->
+        <div class="info">
+            <h3>Простой сайт для помощи с уроками(не гдз)</h3>
+        </div>
+    </header>
+    
+    <!-- Основной контент страницы -->
+    <div class="main">
+        <!-- Приветственное сообщение -->
+        <h2>Привет! Выбери действие</h2>
+        
+        <!-- Кнопка для перехода к математическим примерам -->
+        <button type="button" name="math" class="math" id="math">
+            Тренировать Математические Примеры
+        </button>
+        
+        <!-- Кнопка для перехода к правилам русского языка -->
+        <button type="button" name="russian" class="russian" id="russian">
+            Повторить Правила Русского Языка
+        </button>
+    </div>
+    
+    <!-- Встроенный JavaScript код -->
+    <script>
+        /**
+         * Обработчик события для кнопки "Тренировать Математические Примеры"
+         * Переходит на страницу math.html
+         */
+        document.getElementById('math').addEventListener('click', function(){ 
+            // Открывает страницу math.html в текущем окне
+            window.open('math.html', '_self');
+        });
+
+        /**
+         * Обработчик события для кнопки "Повторить Правила Русского Языка"
+         * Переходит на страницу russian.html
+         */
+        document.getElementById('russian').addEventListener('click', function(){ 
+            // Открывает страницу russian.html в текущем окне
+            // Замечание: лишняя точка с запятой в конце строки - синтаксическая ошибка
+            window.open('russian.html', '_self'); // Исправлено: убрана лишняя точка с запятой
+        });
+    </script>
+</body>
+</html>

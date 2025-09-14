@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <title>Помогалка По Урокам</title>
+    
+    <!-- Стили для оформления страницы -->
+    <style>
+        /* Основные стили для body */
+        body {
+            text-align: center;           /* Выравнивание текста по центру */
+            color: white;                 /* Цвет текста белый */
+            font-family: Arial, sans-serif; /* Шрифт Arial */
+            margin: 0;                    /* Убираем внешние отступы */
+            padding: 20px;                /* Добавляем внутренние отступы */
+        }
+
+        /* Фон страницы */
+        html {
+            background-color: rgb(47, 61, 61); /* Темно-зеленый фон */
+        }
+
+        /* Стили для логотипа */
+        .logo {
+            margin-bottom: 20px;          /* Отступ снизу */
+        }
+
+        /* Стили для основного текста */
+        .main {
+            margin: 20px 0;               /* Вертикальные отступы */
+            font-size: 1.2em;             /* Размер шрифта */
+        }
+
+        /* Стили для кнопок основного блока */
+        .buttons {
+            margin: 30px 0;               /* Вертикальные отступы */
+            display: flex;                /* Flex-контейнер для выравнивания */
+            justify-content: center;      /* Центрируем элементы */
+            gap: 15px;                    /* Расстояние между кнопками */
+            flex-wrap: wrap;              /* Перенос кнопок при маленьком экране */
+        }
+
+        /* Общие стили для всех кнопок */
+        button {
+            text-align: center;           /* Текст по центру */
+            width: 200px;                 /* Ширина кнопки */
+            height: 50px;                 /* Высота кнопки */
+            background-color: aqua;       /* Цвет фона */
+            border: none;                 /* Убираем границу */
+            border-radius: 8px;           /* Скругленные углы */
+            font-size: 16px;              /* Размер шрифта */
+            cursor: pointer;              /* Курсор указатель при наведении */
+            font-weight: bold;            /* Жирный шрифт */
+        }
+
+        /* Стили при наведении на активные кнопки */
+        button:hover:not(:disabled) {
+            background-color: lightblue;  /* Светло-голубой при наведении */
+        }
+
+        /* Стили для неактивных кнопок */
+        button:disabled {
+            background-color: #6c757d;    /* Серый цвет */
+            cursor: not-allowed;          /* Курсор "запрещено" */
+        }
+
+        /* Стили для отображения примера */
+        #message {
+            margin-top: 30px;             /* Отступ сверху */
+            font-size: 2em;               /* Большой размер шрифта */
+            font-weight: bold;            /* Жирный шрифт */
+            min-height: 40px;             /* Минимальная высота */
+            color: #ffeb3b;               /* Ярко-желтый цвет */
+        }
+
+        /* Стили для поля ввода ответа */
+        #answer-input {
+            width: 80px;                  /* Ширина поля */
+            height: 40px;                 /* Высота поля */
+            font-size: 20px;              /* Размер шрифта */
+            text-align: center;           /* Текст по центру */
+            border: none;                 /* Убираем границу */
+            border-radius: 8px;           /* Скругленные углы */
+            margin: 15px;                 /* Отступы */
+            outline: none;                /* Убираем контур при фокусе */
+            background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон */
+            color: white;                 /* Белый цвет текста */
+        }
+
+        /* Стили для неактивного поля ввода */
+        #answer-input:disabled {
+            background-color: rgba(100, 100, 100, 0.3); /* Темно-серый фон */
+            cursor: not-allowed;          /* Курсор "запрещено" */
+        }
+
+        /* Стили для кнопки проверки */
+        #check-btn {
+            width: 150px;                 /* Ширина кнопки */
+            height: 45px;                 /* Высота кнопки */
+            font-size: 16px;              /* Размер шрифта */
+            background-color: #4CAF50;    /* Зеленый цвет */
+            color: white;                 /* Белый текст */
+            margin-top: 10px;             /* Отступ сверху */
+        }
+
+        /* Стили при наведении на активную кнопку проверки */
+        #check-btn:hover:not(:disabled) {
+            background-color: #45a049;    /* Темно-зеленый при наведении */
+        }
+
+        /* Стили для неактивной кнопки проверки */
+        #check-btn:disabled {
+            background-color: #6c757d;    /* Серый цвет */
+            cursor: not-allowed;          /* Курсор "запрещено" */
+        }
+
+        /* Стили для отображения результата */
+        .result {
+            margin-top: 15px;             /* Отступ сверху */
+            font-size: 1.5em;             /* Размер шрифта */
+            font-weight: bold;            /* Жирный шрифт */
+            min-height: 40px;             /* Минимальная высота */
+        }
+
+        /* Стили для правильного ответа */
+        .correct {
+            color: #4CAF50;               /* Зеленый цвет */
+        }
+
+        /* Стили для неправильного ответа */
+        .wrong {
+            color: #f44336;               /* Красный цвет */
+        }
+
+        /* Стили для блока управления */
+        .control-buttons {
+            display: flex;                /* Flex-контейнер */
+            justify-content: center;      /* Центрируем элементы */
+            gap: 15px;                    /* Расстояние между кнопками */
+            margin-top: 20px;             /* Отступ сверху */
+        }
+
+        /* Стили для кнопок в блоке управления */
+        .control-buttons button {
+            width: 150px;                 /* Ширина кнопок */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Блок с логотипом и заголовком -->
+        <div class="logo">
+            <img src="logo.png" alt="Логотип"> <!-- Изображение логотипа -->
+            <h1>Помогалка По Урокам</h1>   <!-- Заголовок страницы -->
+        </div>
+
+        <!-- Основной текст с инструкцией -->
+        <div class="main">
+            <h3>Хочешь потренировать примеры по математике? Нажми на кнопку, чтобы увидеть пример.</h3>
+        </div>
+
+        <!-- Основные кнопки: Показать пример и Выйти -->
+        <div class="buttons">
+            <button type="button" id="primer">Показать Пример</button>
+            <button type="button" id="exit">Выйти</button>
+        </div>
+
+        <!-- Блок для отображения математического примера -->
+        <div id="message"></div>
+        
+        <!-- Поле ввода для ответа пользователя (изначально неактивно) -->
+        <input type="number" id="answer-input" placeholder="Твой ответ" min="-100" max="1000" disabled>
+        
+        <!-- Кнопка для проверки ответа (изначально неактивна) -->
+        <button id="check-btn" disabled>Проверить</button>
+        
+        <!-- Блок для отображения результата проверки -->
+        <div id="result" class="result"></div>
+        
+        <!-- Блок с дополнительными кнопками управления -->
+        <div class="control-buttons">
+            <button id="skip-btn" style="display: none;">Пропустить</button>
+        </div>
+    </header>
+
+    <!-- JavaScript код для интерактивности -->
+    <script>
+        // Глобальные переменные для хранения текущего ответа и состояния
+        let currentAnswer = null;        // Хранит правильный ответ
+        let exampleShown = false;        // Флаг показа примера
+
+        // Получаем ссылки на все элементы DOM для удобства работы
+        const primerBtn = document.getElementById('primer');      // Кнопка "Показать пример"
+        const exitBtn = document.getElementById('exit');          // Кнопка "Выйти"
+        const checkBtn = document.getElementById('check-btn');    // Кнопка "Проверить"
+        const skipBtn = document.getElementById('skip-btn');      // Кнопка "Пропустить"
+        const messageDiv = document.getElementById('message');    // Блок для примера
+        const resultDiv = document.getElementById('result');      // Блок для результата
+        const input = document.getElementById('answer-input');    // Поле ввода ответа
+
+        /**
+         * Функция генерации случайного математического примера
+         * Создает пример с операциями +, -, *, / с целыми результатами
+         */
+        function generateExample() {
+            // Массивы возможных чисел и знаков
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];    // Числа от 1 до 9
+            const signs = ['+', '-', '*', '/'];              // Математические операции
+
+            // Подготовка интерфейса перед показом нового примера
+            resultDiv.textContent = '';     // Очищаем результат
+            resultDiv.className = 'result'; // Сбрасываем класс результата
+            input.value = '';               // Очищаем поле ввода
+            input.disabled = false;         // Делаем поле ввода активным
+            checkBtn.disabled = false;      // Делаем кнопку проверки активной
+            input.focus();                  // Устанавливаем фокус на поле ввода
+
+            // Переменные для хранения компонентов примера
+            let num1, sign, num2, result;
+
+            // Цикл для генерации корректного примера
+            do {
+                // Генерируем случайные числа и знак
+                num1 = numbers[Math.floor(Math.random() * numbers.length)]; // Первое число
+                sign = signs[Math.floor(Math.random() * signs.length)];     // Знак операции
+                num2 = numbers[Math.floor(Math.random() * numbers.length)]; // Второе число
+
+                // Специальная обработка для деления
+                if (sign === '/') {
+                    // Проверяем деление на ноль и дробные результаты
+                    if (num2 === 0) continue;                    // Пропускаем деление на 0
+                    if (num1 % num2 !== 0) continue;             // Пропускаем дробные результаты
+                    result = num1 / num2;                        // Вычисляем результат
+                } else {
+                    // Обработка остальных операций
+                    switch (sign) {
+                        case '+': result = num1 + num2; break;   // Сложение
+                        case '-': result = num1 - num2; break;   // Вычитание
+                        case '*': result = num1 * num2; break;   // Умножение
+                    }
+                }
+            } while (sign === '/' && (num2 === 0 || num1 % num2 !== 0)); // Повторяем пока не получим корректный пример
+
+            // Сохраняем правильный ответ для последующей проверки
+            currentAnswer = result;
+
+            // Отображаем пример в блоке message (без ответа)
+            messageDiv.textContent = `${num1} ${sign} ${num2} = ?`;
+            exampleShown = true;            // Устанавливаем флаг показа примера
+
+            // Делаем кнопку "Показать пример" неактивной и меняем текст
+            primerBtn.disabled = true;
+            primerBtn.textContent = "Пример показан";
+
+            // Показываем кнопку "Пропустить"
+            skipBtn.style.display = 'inline-block';
+
+            // Кнопка "Выйти" остается видимой (по требованию)
+        }
+
+        // Добавляем обработчик события клика на кнопку "Показать пример"
+        primerBtn.addEventListener('click', generateExample);
+
+        /**
+         * Обработчик клика на кнопку "Проверить"
+         * Проверяет введенный пользователем ответ
+         */
+        checkBtn.addEventListener('click', function() {
+            // Получаем введенный пользователем ответ и преобразуем в число
+            const userAnswer = parseFloat(input.value);
+
+            // Проверяем, ввел ли пользователь число
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'Введите число!';        // Сообщение об ошибке
+                resultDiv.className = 'result wrong';            // Красный цвет текста
+                return;                                          // Прерываем выполнение
+            }
+
+            // Сравниваем введенный ответ с правильным
+            if (userAnswer === currentAnswer) {
+                // Если ответ правильный
+                resultDiv.textContent = `✅ Правильно! Ответ был: ${currentAnswer}`;
+                resultDiv.className = 'result correct';          // Зеленый цвет текста
+            } else {
+                // Если ответ неправильный
+                resultDiv.textContent = `❌ Неправильно! Правильный ответ: ${currentAnswer}`;
+                resultDiv.className = 'result wrong';            // Красный цвет текста
+            }
+
+            // Делаем кнопку "Показать пример" активной и возвращаем исходный текст
+            primerBtn.disabled = false;
+            primerBtn.textContent = "Показать Пример";
+            exampleShown = false;           // Сбрасываем флаг показа примера
+
+            // Скрываем кнопку "Пропустить"
+            skipBtn.style.display = 'none';
+            
+            // Делаем поле ввода и кнопку проверки неактивными
+            input.disabled = true;
+            checkBtn.disabled = true;
+        });
+
+        /**
+         * Обработчик клика на кнопку "Пропустить"
+         * Показывает правильный ответ и позволяет перейти к следующему примеру
+         */
+        skipBtn.addEventListener('click', function() {
+            // Показываем правильный ответ
+            resultDiv.textContent = `Правильный ответ: ${currentAnswer}`;
+            resultDiv.className = 'result wrong';                // Красный цвет текста
+            
+            // Делаем кнопку "Показать пример" активной и возвращаем исходный текст
+            primerBtn.disabled = false;
+            primerBtn.textContent = "Показать Пример";
+            exampleShown = false;           // Сбрасываем флаг показа примера
+
+            // Скрываем кнопку "Пропустить"
+            skipBtn.style.display = 'none';
+            
+            // Делаем поле ввода и кнопку проверки неактивными
+            input.disabled = true;
+            checkBtn.disabled = true;
+        });
+
+        /**
+         * Обработчик клика на кнопку "Выйти"
+         * Переходит на страницу main.html
+         */
+        exitBtn.addEventListener('click', function() {
+            window.location.href = 'index.html'; // Переход на другую страницу
+        });
+
+        /**
+         * Обработчик нажатия клавиши в поле ввода
+         * Позволяет использовать Enter для проверки ответа
+         */
+        input.addEventListener('keypress', function(e) {
+            // Проверяем, нажата ли клавиша Enter и показан ли пример
+            if (e.key === 'Enter' && exampleShown && !input.disabled) {
+                checkBtn.click(); // Имитируем клик по кнопке "Проверить"
+            }
+        });
+    </script>
+</body>
+</html>
